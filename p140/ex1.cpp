@@ -5,17 +5,22 @@
 
 
 int main(int argc, char* argv[]) {
+	std::ifstream in;
 	if(argc == 2) {
-		std::ifstream in{argv[1]};
-		if(!in) {
+		in.open(argv[1]);
+		if(!in.is_open()) {
 			std::cout << "failed to open '" << argv[1] << '\'';
 			return -1;
 		}
-		using iter = std::istreambuf_iterator<char>;
-		std::cout << std::count(iter{in}, iter{}, '\n');
 	}
 	else {
-		std::cout << "expected 2 cmd line args, got " << argc;
-		return -1;
+		in.open("text.txt");
+		if(!in.is_open()) {
+			std::cout << "failed to open 'text.txt'";
+			return -1;
+		}
 	}
+	
+	using iter = std::istreambuf_iterator<char>;
+	std::cout << std::count(iter{in}, iter{}, '\n');
 }
