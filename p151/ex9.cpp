@@ -10,16 +10,20 @@ struct person {
   }
 };
 
+// std::vector<person> would be better
 struct people {
   int count;
   person people[30];
 };
 
 void read(std::istream& in, people& out) {
-  for(int i = out.count;i < 30; i = ++out.count) {
+  for(int i = 0;i < 30; ++i) {
     in >> std::setw(16) >> out.people[i].name;
     in >> out.people[i].height;
-    if(!in) { break; }
+    if(!in) {
+        out.count = i;
+        break;
+    }
   }
 }
 
@@ -30,6 +34,7 @@ void write(std::ostream& out, people& in) {
   }
 }
 
+// shouldn't write your own sorts
 void sort(people& in) {
   person* ps = in.people;
   int n = in.count;
