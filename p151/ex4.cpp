@@ -6,9 +6,19 @@ unsigned longest_line(std::istream& in) {
     if(line.empty())
       continue;
 
-    unsigned count = 1;
+    unsigned count = 0;
     for(const char& c : line) {
-      if(c == ' ') ++count;
+      switch(c) {
+        case ' ':
+        case ',':
+        case '.':
+        case '(':
+        case ')':
+        case '\t':
+        case '\n':
+          continue;
+      }
+      count += 1;
     }
     if(count > max_count) {
       max_count = count;
